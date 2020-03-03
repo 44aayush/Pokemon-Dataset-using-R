@@ -1,0 +1,100 @@
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages(c("grammar", "of", "graphics"))
+install.packages(c("grammar", "of", "graphics"))
+install.packages("DBI")
+setwd("E:/PROJECT/R")
+data<-read.csv("pokemon.csv")
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(knitr)
+library(gridExtra)
+allLegendaries<-data[data$isLegendary == “TRUE”]
+allLegendaries$isLegendary<-factor(allLegendaries[,”isLegendary”])
+legendariesPerGeneration <-  as.data.frame(table(allLegendaries$Generation))
+colnames ( legendariesPerGeneration ) <- c (“Generation” , ”Legendaries”)
+legendariesPerGeneration
+ggplot(legendariesPerGeneration , aes(Generation , Legendaries)) + geom_bar(stat = “identity”)
+legendariesPerGeneration <-  as.data.frame(table(allLegendaries$Generation))
+allLegendaries<-data[data$isLegendary == “TRUE”]
+ggplot(data, aes(x=fct_infreq(Type_1))) +
+geom_bar(fill="#99CCFF", colour="black") +
+labs(x="Type 1", y="Frequency",
+title="How many Pokémon of each primary type there are?") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+ggplot(pokemon, aes(x=fct_infreq(Type.2))) +
+geom_bar(fill="#99CCFF", colour="black") +
+labs(x="Type 2", y="Frequency",
+title="How many Pokémon of each secondary type there are?") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+ggplot(pokemon, aes(x=fct_infreq(Type_2))) +
+geom_bar(fill="#99CCFF", colour="black") +
+labs(x="Type 2", y="Frequency",
+title="How many Pokémon of each secondary type there are?") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+ggplot(data, aes(x=fct_infreq(Type_2))) +
+geom_bar(fill="#99CCFF", colour="black") +
+labs(x="Type 2", y="Frequency",
+title="How many Pokémon of each secondary type there are?") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+ggplot(data, aes(x=fct_infreq(Type_2))) +
+geom_bar(fill="#33ddaa", colour="black") +
+labs(x="Type 2", y="Frequency",
+title="How many Pokémon of each secondary type there are?") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+ggplot(data %>% group_by(Type_1) %>% mutate(med=median(HP)),
+aes(x=reorder(Type.1, HP, FUN=median), y=HP)) +
+geom_boxplot(aes(fill=med)) +
+scale_fill_gradient(low="paleturquoise", high="paleturquoise4") +
+coord_flip() +
+labs(x="Type 1",
+title="Boxplot of HP") +
+theme_bw() +
+theme(legend.position="none")
+ggplot(data %>% group_by(Type_1) %>% mutate(med=median(HP)),
+aes(x=reorder(Type_1, HP, FUN=median), y=HP)) +
+geom_boxplot(aes(fill=med)) +
+scale_fill_gradient(low="paleturquoise", high="paleturquoise4") +
+coord_flip() +
+labs(x="Type 1",
+title="Boxplot of HP") +
+theme_bw() +
+theme(legend.position="none")
+data %>%
+select(Name, Attack) %>%
+arrange(desc(Attack)) %>%
+slice(1:10) %>%
+ggplot(aes(x=reorder(Name, Attack), y=Attack)) +
+geom_bar(stat="identity", aes(fill=Attack), colour="black", show.legend=FALSE) +
+geom_label(aes(label=Attack)) +
+scale_fill_gradient(low="paleturquoise", high="paleturquoise4") +
+coord_flip() +
+labs(x="Name", title="Top 10 Attack Pokémon") +
+theme_bw()
+ggplot(data, aes(x=Type_1, fill=Generation)) +
+geom_bar() +
+labs(x="Generation", y="Number of Pokémon",
+title="Number of Pokémon of each primary type per generation") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+install.packages("RColorBrewer")
+library(RColorBrewer)
+ggplot(data, aes(x=Type_1, fill=Generation)) +
+geom_bar() +
+labs(x="Generation", y="Number of Pokémon",
+title="Number of Pokémon of each primary type per generation") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+ggplot(data, aes(x=Type_1, fill=Generation)) +
+geom_bar(aes(fill="#4267da")) +
+labs(x="Generation", y="Number of Pokémon",
+title="Number of Pokémon of each primary type per generation") +
+theme_bw() +
+theme(axis.text.x=element_text(angle=45, hjust=1))
+q()
